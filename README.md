@@ -36,9 +36,9 @@
 ---
 **GetAppTypes** `GetAppTypes(): string(json)`
 
-슈터에서 점검기능을 지원하는 프로그램 목록을 JSON 형식 문자열로 반환합니다. `JSON.stringify`를 활용하여 사용하면 됩니다.
+슈터에서 점검기능을 지원하는 프로그램 목록을 JSON 형식 문자열로 반환합니다. `JSON.parse`를 활용하여 사용하면 됩니다.
 
-    JSON.stringify(shooter.GetAppTypes());
+    JSON.parse(shooter.GetAppTypes());
     => [
            {"appType":"corelDRAW","version":9,"name":"CorelDRAW 9","progId":"CorelDRAW.Application.9","compatibility":"x86"},
            {"appType":"corelDRAW","version":10,"name":"CorelDRAW 10","progId":"CorelDRAW.Application.10","compatibility":"x86"},
@@ -57,11 +57,40 @@
 
 ---
 
+**GetAutomationConfig** `GetAutomationConfig(): string(json)`
+
+슈터의 현재 상세점검 설정을 JSON형식 문자열로 반환합니다.
+
+    JSON.parse(shooter.GetAutomationConfig());
+    => {
+           "corel-object-lock":"true",
+           "corel-object-ole":"true",
+           ...,
+           "illust-bitmap-resolution-min":"290",
+           "illust-bitmap-link":"true",
+           ...
+       }
+
+---
+
+**SetAutomationConfig** `SetAutomationConfig(string configJson)`
+
+슈터의 상세점검 설정을 업데이트 합니다. configJson은 JSON형식 문자열입니다.
+
+    // 설정을 가져온다.
+    var config = JSON.parse(shooter.GetAutomationConfig());
+    // 코렐에서 점검시 비트맵 최저해상도를 250dpi로 변경
+    config['corel-bitmap-resolution-min'] = 250;
+    // 슈터에 적용
+    shooter.SetAutomationConfig(JSON.stringify(config));
+
+---
+
 **GetProgressItems** `GetProgressItems(bool details, bool save): string`
 
 슈터에서 점검할 작업목록을 JSON 형식 문자열로 반환합니다. `details`는 상세점검이 포함될지를 나타내고, `save`는 원본파일 및 PDF파일을 저장할지를 나타냅니다.
 
-    JSON.stringify(shooter.GetProgressItems(true, true));
+    JSON.parse(shooter.GetProgressItems(true, true));
     => [
            {"key":"CheckAppStart","value":"애플리케이션을 연결합니다."},
            {"key":"CheckDocument","value":"문서를 확인합니다."},
@@ -111,3 +140,28 @@
 **SelectObject** `SelectObject(int shapeIndex)`
 
 파일점검중 객체에 오류가 있을때 얻은 `shapeIndex`를 사용하여 그래픽 애플리케이션에서 해당 객체만 선택된 상태로 만듭니다.
+
+---
+
+**GetOriginFileName** `GetOriginFileName(): string`
+
+마지막으로 저장된 원본파일이름을 가져올 수 있습니다. `shooter.FileCheck` 사용시 `save` 파라미터가 `true`일때만 사용해야합니다.
+
+    shooter.GetOriginFileName();
+    => '2f038ba3-f4f1-44a0-a319-d2f841508fdf.ai'
+
+---
+**GetPdfFileName** `GetPdfFileName(): string`
+
+마지막으로 저장된 Pdf파일이름을 가져올 수 있습니다. `shooter.FileCheck` 사용시 `save` 파라미터가 `true`일때만 사용해야합니다.
+
+    shooter.GetOriginFileName();
+    => '2f038ba3-f4f1-44a0-a319-d2f841508fdf.pdf'
+
+---
+
+**Cancel** `Cancel()`
+
+파일점검도중 호출하면 파일점검이 중지됩니다.
+
+---
