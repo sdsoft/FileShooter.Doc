@@ -133,6 +133,7 @@ window._fileupload_callback_ = function(result) {
   // result.key: status가 'progress'일때 파일이름 (예: 2f038ba3-f4f1-44a0-a319-d2f841508fdf_pdf)
   // result.progress: status가 'progress'일때 해당 파일의 업로드 진행 퍼센트 1~100
   // result.message: status가 'error'일때 에러메세지
+  // result.result: status가 'completed'일때 서버에서 리턴한 값
 };
 ```
 ---
