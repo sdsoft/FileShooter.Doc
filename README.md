@@ -19,6 +19,7 @@ shooter.GetSize();
 
 **SetTopMost** `SetTopMost(bool value)`
 
+
 메인화면의 항상위 세팅을 변경합니다.
 ```javascript
 shooter.SetTopMost(true);   // 항상위
@@ -113,6 +114,7 @@ window._filecheck_callback_ = function(result) {
   // 현재 context의 세부상황
   //
   // result.current, result.total: status가 'Progress'일때의 세부진행상황
+  // result.errorCode: status가 'Warning'이나 'Fail'일때 에러코드
   // result.errorMessage: status가 'Warning'이나 'Fail'일때 에러메세지
   // result.shapeIndex: status가 'Warning'이나 'Fail'일때 문제객체의 id
   //
