@@ -168,3 +168,12 @@ shooter.GetOriginFileName();
 파일점검도중 호출하면 파일점검이 중지됩니다.
 
 ---
+
+**IsRunningInUSB** `IsRunningInUSB(): bool`
+
+프로그램이 USB드라이브상에서 실행중인지를 반환합니다.
+```javascript
+shooter.IsRunningInUSB();
+=> false
+```
+---
