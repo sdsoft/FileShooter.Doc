@@ -1,45 +1,45 @@
 # FileShooter3 API
 
-**SetSize** `SetSize(int width, int height)`
+**setSize** `setSize(int width, int height)`
 
 메인화면의 창 크기를 변경합니다. `width`와 `height`의 단위는 `px`입니다.
 ```javascript
-shooter.SetSize(800, 600);
+shooter.setSize(800, 600);
 ```
 ---
 
-**GetSize** `GetSize(): int[]`
+**getSize** `getSize(): int[]`
 
 메인화면의 창 크기를 배열로 반환합니다.
 ```javascript
-shooter.GetSize();
+shooter.getSize();
 => [800, 600]
 ```
 ---
 
-**SetTopMost** `SetTopMost(bool value)`
+**setTopMost** `setTopMost(bool value)`
 
 
 메인화면의 항상위 세팅을 변경합니다.
 ```javascript
-shooter.SetTopMost(true);   // 항상위
-shooter.SetTopMost(false);  // 보통
+shooter.setTopMost(true);   // 항상위
+shooter.setTopMost(false);  // 보통
 ```
 ---
 
-**GetTopMost** `GetTopMost(): bool`
+**getTopMost** `getTopMost(): bool`
 
 메인화면의 항상위 세팅을 반환합니다.
 ```javascript
-shooter.GetTopMost();
+shooter.getTopMost();
 => false
 ```
 ---
-**GetAppTypes** `GetAppTypes(): string(json)`
+**getAppTypes** `getAppTypes(): string(json)`
 
 슈터에서 점검기능을 지원하는 프로그램 목록을 JSON 형식 문자열로 반환합니다. `JSON.parse`를 활용하여 사용하면 됩니다.
 ```javascript
-JSON.parse(shooter.GetAppTypes());
+JSON.parse(shooter.getAppTypes());
 => [
      {"appType":"corelDRAW","version":9,"name":"CorelDRAW 9","progId":"CorelDRAW.Application.9","compatibility":"x86"},
      {"appType":"corelDRAW","version":10,"name":"CorelDRAW 10","progId":"CorelDRAW.Application.10","compatibility":"x86"},
@@ -49,20 +49,20 @@ JSON.parse(shooter.GetAppTypes());
 ```
 ---
 
-**GetLastApp** `GetLastApp(): string`
+**getLastApp** `getLastApp(): string`
 
 슈터에서 마지막으로 점검할 때 사용한 프로그램의 이름을 반환합니다. 처음 사용시에는 빈문자열을 반환합니다.
 ```javascript
-shooter.GetLastApp();
+shooter.getLastApp();
 => "CorelDRAW 15"
 ```
 ---
 
-**GetAutomationConfig** `GetAutomationConfig(): string(json)`
+**getAutomationConfig** `getAutomationConfig(): string(json)`
 
 슈터의 현재 상세점검 설정을 JSON형식 문자열로 반환합니다.
 ```javascript
-JSON.parse(shooter.GetAutomationConfig());
+JSON.parse(shooter.getAutomationConfig());
 => {
      "corel-object-lock":"true",
      "corel-object-ole":"true",
@@ -74,24 +74,24 @@ JSON.parse(shooter.GetAutomationConfig());
 ```
 ---
 
-**SetAutomationConfig** `SetAutomationConfig(string configJson)`
+**setAutomationConfig** `setAutomationConfig(string configJson)`
 
 슈터의 상세점검 설정을 업데이트 합니다. configJson은 JSON형식 문자열입니다.
 ```javascript
 // 설정을 가져온다.
-var config = JSON.parse(shooter.GetAutomationConfig());
+var config = JSON.parse(shooter.getAutomationConfig());
 // 코렐에서 점검시 비트맵 최저해상도를 250dpi로 변경
 config['corel-bitmap-resolution-min'] = 250;
 // 슈터에 적용
-shooter.SetAutomationConfig(JSON.stringify(config));
+shooter.setAutomationConfig(JSON.stringify(config));
 ```
 ---
 
-**GetProgressItems** `GetProgressItems(bool details, bool save): string`
+**getProgressItems** `getProgressItems(bool details, bool save): string`
 
 슈터에서 점검할 작업목록을 JSON 형식 문자열로 반환합니다. `details`는 상세점검이 포함될지를 나타내고, `save`는 원본파일 및 PDF파일을 저장할지를 나타냅니다.
 ```javascript
-JSON.parse(shooter.GetProgressItems(true, true));
+JSON.parse(shooter.getProgressItems(true, true));
 => [
      {"key":"CheckAppStart","value":"애플리케이션을 연결합니다."},
      {"key":"CheckDocument","value":"문서를 확인합니다."},
@@ -101,11 +101,11 @@ JSON.parse(shooter.GetProgressItems(true, true));
 ```
 ---
 
-**FileCheck** `FileCheck(string appName, int width, int height, int side, int count, bool details, bool save, bool resumeOnError, string callbackName)`
+**fileCheck** `fileCheck(string appName, int width, int height, int side, int count, bool details, bool save, bool resumeOnError, string callbackName)`
 
 파일점검을 시작합니다. `resumeOnError`는 점검도중 오류가 발생해도 중간에 멈추지 않고 점검을 끝까지 진행하는지 세팅할 수 있습니다. `callbackName`은 점검 진행상황을 알려주는 콜백함수의 이름입니다. 같은 이름으로 함수를 정의하면 점검 진행상황을 확인할 수 있습니다.
 ```javascript
-shooter.FileCkeck('CorelDRAW 14', 92, 52, 1, 1, true, true, true, '_filecheck_callback_';
+shooter.fileCkeck('CorelDRAW 14', 92, 52, 1, 1, true, true, true, '_filecheck_callback_';
 window._filecheck_callback_ = function(result) {
   // result.context: ['CheckAppStart', 'CheckDocument', ...] 
   // 어떤 항목을 점검하고 있는지 (GetProgressItems 에서 반환된 값들의 키)
@@ -123,13 +123,13 @@ window._filecheck_callback_ = function(result) {
 ```
 ---
 
-**FileUpload** `FileUpload(string pdfFilename, string originFilename, string callbackName)`
+**fileUpload** `fileUpload(string pdfFilename, string originFilename, string callbackName)`
 
-파일을 업로드 합니다. 점검이 끝나고 저장된 `pdfFilename`과 `originFilename`은 각각 `shooter.GetPdfFileName`과 `shooter.GetOriginFileName` 함수로 얻을 수 있습니다. `callbackName` 은 업로드 진행상황을 알려주는 콜백함수의 이름입니다. 같은 이름으로 함수를 정의하면 업로드 진행상황을 확인할 수 있습니다.
+파일을 업로드 합니다. 점검이 끝나고 저장된 `pdfFilename`과 `originFilename`은 각각 `shooter.getPdfFileName`과 `shooter.getOriginFileName` 함수로 얻을 수 있습니다. `callbackName` 은 업로드 진행상황을 알려주는 콜백함수의 이름입니다. 같은 이름으로 함수를 정의하면 업로드 진행상황을 확인할 수 있습니다.
 ```javascript
-var pdfFilename = shooter.GetPdfFileName();
-var originFilename = shooter.GetOriginFileName();
-shooter.FileUpload(pdfFileName, originFileName, '_fileupload_callback_');
+var pdfFilename = shooter.getPdfFileName();
+var originFilename = shooter.getOriginFileName();
+shooter.fileUpload(pdfFileName, originFileName, '_fileupload_callback_');
 window._fileupload_callback_ = function(result) {
   // result.status: ['progress', 'completed', 'error'] 업로드상
   // result.key: status가 'progress'일때 파일이름 (예: 2f038ba3-f4f1-44a0-a319-d2f841508fdf_pdf)
@@ -140,40 +140,40 @@ window._fileupload_callback_ = function(result) {
 ```
 ---
 
-**SelectObject** `SelectObject(int shapeIndex)`
+**selectObject** `selectObject(int shapeIndex)`
 
 파일점검중 객체에 오류가 있을때 얻은 `shapeIndex`를 사용하여 그래픽 애플리케이션에서 해당 객체만 선택된 상태로 만듭니다.
 
 ---
 
-**GetOriginFileName** `GetOriginFileName(): string`
+**getOriginFileName** `getOriginFileName(): string`
 
-마지막으로 저장된 원본파일이름을 가져올 수 있습니다. `shooter.FileCheck` 사용시 `save` 파라미터가 `true`일때만 사용해야합니다.
+마지막으로 저장된 원본파일이름을 가져올 수 있습니다. `shooter.fileCheck` 사용시 `save` 파라미터가 `true`일때만 사용해야합니다.
 ```javascript
-shooter.GetOriginFileName();
+shooter.getOriginFileName();
 => '2f038ba3-f4f1-44a0-a319-d2f841508fdf.ai'
 ```
 ---
-**GetPdfFileName** `GetPdfFileName(): string`
+**getPdfFileName** `getPdfFileName(): string`
 
-마지막으로 저장된 Pdf파일이름을 가져올 수 있습니다. `shooter.FileCheck` 사용시 `save` 파라미터가 `true`일때만 사용해야합니다.
+마지막으로 저장된 Pdf파일이름을 가져올 수 있습니다. `shooter.fileCheck` 사용시 `save` 파라미터가 `true`일때만 사용해야합니다.
 ```javascript
-shooter.GetOriginFileName();
+shooter.getOriginFileName();
 => '2f038ba3-f4f1-44a0-a319-d2f841508fdf.pdf'
 ```
 ---
 
-**Cancel** `Cancel()`
+**cancel** `cancel()`
 
 파일점검도중 호출하면 파일점검이 중지됩니다.
 
 ---
 
-**IsRunningInUSB** `IsRunningInUSB(): bool`
+**isRunningInUSB** `isRunningInUSB(): bool`
 
 프로그램이 USB드라이브상에서 실행중인지를 반환합니다.
 ```javascript
-shooter.IsRunningInUSB();
+shooter.isRunningInUSB();
 => false
 ```
 ---
