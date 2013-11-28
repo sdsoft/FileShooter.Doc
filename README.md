@@ -146,6 +146,15 @@ window._fileupload_callback_ = function(result) {
 
 ---
 
+**selectAllObject** `selectAllObject(string shapeIndexes)`
+
+파일점검중 객체에 오류가 있을때 얻은 `shapeIndex`들의 배열을 사용하여 그래픽 애플리케이션에서 넘겨받은 객체들을 모두 선택된 상태로 만듭니다. `shapeIndexes` 배열은 `JSON.stringify` 함수를 이용하여 `string`으로 넘겨야합니다.
+```javascript
+var shapeIndexes = [0,1,3,6];
+shooter.selectAllObject(JSON.stringify(shapeIndexes));
+```
+---
+
 **getOriginFileName** `getOriginFileName(): string`
 
 마지막으로 저장된 원본파일이름을 가져올 수 있습니다. `shooter.fileCheck` 사용시 `save` 파라미터가 `true`일때만 사용해야합니다.
