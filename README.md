@@ -167,7 +167,7 @@ shooter.getOriginFileName();
 
 마지막으로 저장된 Pdf파일이름을 가져올 수 있습니다. `shooter.fileCheck` 사용시 `save` 파라미터가 `true`일때만 사용해야합니다.
 ```javascript
-shooter.getOriginFileName();
+shooter.getPdfFileName();
 => '2f038ba3-f4f1-44a0-a319-d2f841508fdf.pdf'
 ```
 ---
@@ -186,3 +186,44 @@ shooter.isRunningInUSB();
 => false
 ```
 ---
+
+**login** `login(string userid)`
+
+로그인했을 때 호출해주세요.
+```javascript
+shooter.login(member_id);
+```
+---
+
+**transaction** `transaction(string transactionJson)`
+
+주문이 완료되었을 때 호출해주세요.`transactionJson`은 JSON형식 문자열입니다.
+
+```javascript
+var transaction_obj = {
+    transactionId: "pt1402080624",		// 주문번호
+    revenue: 30000,						// 주문총액
+    affiliation: "printcity",			// 가맹점 (선택)
+    shipping: 2500,						// 배송비 (선택)
+    tax: 3000,							// 세금 (선택)
+    currencyCode: "krw",				// 통화
+    items: [
+    	{
+            sku: "pdk01",					// 제품코드
+            name: "일반명함",				// 제품이름
+            price: 5000,					// 제품가격
+            quantity: 1,					// 건수
+            category: "200SW / 4도 / 92*52" // 세부내역(선택)
+        },
+    	{
+            sku: "pdk03",					// 제품코드
+            name: "수입지명함",				// 제품이름
+            price: 5000,					// 제품가격
+            quantity: 5,					// 건수
+            category: "누브지 / 8도 / 92*52" // 세부내역(선택)
+        }
+    ]
+};
+shooter.transaction(JSON.stringify(transaction_obj));
+```
+
