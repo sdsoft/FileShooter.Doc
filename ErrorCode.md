@@ -1,5 +1,18 @@
 # 파일점검 에러코드
 
+Illustrator에서 대부분의 오류는 타입라이브러리가 제대로 등록되어있지 않을 때 나타나며 그 해결방법은 다음과 같다.
+
+```dos
+:: 커맨트프롬프트를 관리자모드로 실행한다.
+
+:: {IllustratorPath} 는 실제 사용하는 일러스트레이터의 경로로 변경후 복사해서 붙여넣는다.
+:: 예) C:\Program Files\Adobe\Adobe Illustrator CC 2014\Plug-ins\Extensions\ScriptingSupport.aip
+
+:: 한글판일경우 이럴수도 있음 -> "플러그-인\확장 모듈\스크립팅 지원.aip" 
+"%windir%\Microsoft.NET\Framework\v4.0.30319\regtlibv12.exe" "{{IllustratorPath}}\Plug-ins\Extensions\ScriptingSupport.aip"
+
+```
+
 ### CorelDRAW
 
 | ErrorCode	| Message																																|
