@@ -10,7 +10,14 @@ Illustrator에서 대부분의 오류는 타입라이브러리가 제대로 등�
 
 :: 한글판일경우 이럴수도 있음 -> "플러그-인\확장 모듈\스크립팅 지원.aip" 
 "%windir%\Microsoft.NET\Framework\v4.0.30319\regtlibv12.exe" "{{IllustratorPath}}\Plug-ins\Extensions\ScriptingSupport.aip"
+```
 
+만약 `"%windir%\Microsoft.NET\Framework\v4.0.30319\regtlibv12.exe"` 파일이 없다면 [TRegsvr.exe](http://uni.dtp21.com/update/FileShooter3/TRegsvr.exe) 를 받아서 아래처럼 사용한다. 
+
+```bat
+:: 커맨트프롬프트를 관리자모드로 실행한다.
+
+TRegsvr.exe -t "{{IllustratorPath}}\Plug-ins\Extensions\ScriptingSupport.aip"
 ```
 
 ### CorelDRAW
